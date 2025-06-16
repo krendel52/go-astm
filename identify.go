@@ -10,7 +10,7 @@ import (
 
 func IdentifyMessage(messageData []byte, configuration ...astmmodels.Configuration) (messageType messagetype.MessageType, err error) {
 	// Load configuration
-	config, err := loadConfiguration(configuration...)
+	config, err := functions.LoadConfiguration(configuration...)
 	if err != nil {
 		return "", err
 	}
@@ -24,30 +24,28 @@ func IdentifyMessage(messageData []byte, configuration ...astmmodels.Configurati
 	if err != nil {
 		return "", err
 	}
-	// Extract the first characters from each line
-	firstChars := ""
-	for _, line := range lines {
-		if len(line) > 0 {
-			firstChars += string(line[0])
-		}
-	}
-	// TODO: verify these regexes to be correct
-	// Set up the possible message types regexes
-	expressionQuery := "^(HQ+)+L?$"
-	expressionOrder := "^(H(PM?C?M?OM?C?M?)+)+L?$"
-	expressionOrderAndResult := "^(H(PM*C?M*OM*C?M*(RM*C?M*)+)+)+L?$"
-	expressionManyOrderAndResult := "^(H(PM*C?M*(OM*C?M*(RM*C?M*)+)*)+)L?$"
-	// Check the first characters against the regexes and return the message type
+	// Extract signature
+	signature := functions.ExtractSignature(lines)
+
+	// Check the signature against the regexes and return the message type
 	switch {
-	case regexp.MustCompile(expressionQuery).MatchString(firstChars):
+	case regexOrderAndResult.MatchString(signature):
+		return messagetype.Result, nil
+	case regexQuery.MatchString(signature):
 		return messagetype.Query, nil
-	case regexp.MustCompile(expressionOrder).MatchString(firstChars):
+	case regexManyOrderAndResult.MatchString(signature):
+		return messagetype.Result, nil
+	case regexOrder.MatchString(signature):
 		return messagetype.Order, nil
-	case regexp.MustCompile(expressionOrderAndResult).MatchString(firstChars):
-		return messagetype.Result, nil
-	case regexp.MustCompile(expressionManyOrderAndResult).MatchString(firstChars):
-		return messagetype.Result, nil
 	}
 	// If no match was found return unknown
-	return messagetype.Unidentified, err
+	return messagetype.Unidentified, nil
 }
+
+// Regular expressions to identify message types
+var (
+	regexQuery              = regexp.MustCompile("^(HQ+)+L?$")
+	regexOrder              = regexp.MustCompile("^(H(PO+)+)+L?$")
+	regexOrderAndResult     = regexp.MustCompile("^H(P(OR+)+)+L?$")
+	regexManyOrderAndResult = regexp.MustCompile("^(H(P(OR+)+)+L?)+$")
+)

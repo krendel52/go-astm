@@ -8,7 +8,7 @@ import (
 
 func Marshal(sourceStruct interface{}, configuration ...astmmodels.Configuration) (result [][]byte, err error) {
 	// Load configuration
-	config, err := loadConfiguration(configuration...)
+	config, err := functions.LoadConfiguration(configuration...)
 	if err != nil {
 		return nil, err
 	}

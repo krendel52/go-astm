@@ -33,8 +33,8 @@ func helperEncode(charmap *charmap.Charmap, data []byte) []byte {
 	e := charmap.NewEncoder()
 	var b bytes.Buffer
 	writer := transform.NewWriter(&b, e)
-	writer.Write(data)
+	_, _ = writer.Write(data)
 	resultdata := b.Bytes()
-	writer.Close()
+	_ = writer.Close()
 	return resultdata
 }

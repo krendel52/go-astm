@@ -49,7 +49,7 @@ func TestParseLine_MultitypeRecord(t *testing.T) {
 	assert.Equal(t, "string", target.String)
 	assert.Equal(t, 3, target.Int)
 	assert.Equal(t, float32(3.14), target.Float32)
-	assert.Equal(t, float64(3.14159265), target.Float64)
+	assert.Equal(t, 3.14159265, target.Float64)
 	expectedShortTime := time.Date(2006, 1, 2, 0, 0, 0, 0, config.TimeLocation)
 	assert.Equal(t, expectedShortTime, target.Date)
 }
