@@ -2,7 +2,7 @@ package functions
 
 import (
 	"github.com/blutspende/go-astm/v3/models/astmmodels"
-	"regexp"
+	"strings"
 )
 
 func LoadConfiguration(configuration ...astmmodels.Configuration) (config *astmmodels.Configuration, err error) {
@@ -33,7 +33,12 @@ func ExtractSignature(lines []string) string {
 		}
 	}
 	// Remove M and C characters
-	firstChars = regexp.MustCompile("[MC]").ReplaceAllString(firstChars, "")
-	// Return signature
-	return firstChars
+	var signature strings.Builder
+	for _, r := range firstChars {
+		if r != 'M' && r != 'C' {
+			signature.WriteRune(r)
+		}
+	}
+	// Return final signature
+	return signature.String()
 }

@@ -27,22 +27,25 @@ func IdentifyMessage(messageData []byte, configuration ...astmmodels.Configurati
 	// Extract signature
 	signature := functions.ExtractSignature(lines)
 
-	// Set up the possible message types regexes
-	expressionQuery := "^(HQ+)+L?$"
-	expressionOrder := "^(H(PO+)+)+L?$"
-	expressionOrderAndResult := "^H(P(OR+)+)+L?$"
-	expressionManyOrderAndResult := "^(H(P(OR+)+)+L?)+$"
 	// Check the signature against the regexes and return the message type
 	switch {
-	case regexp.MustCompile(expressionQuery).MatchString(signature):
+	case regexOrderAndResult.MatchString(signature):
+		return messagetype.Result, nil
+	case regexQuery.MatchString(signature):
 		return messagetype.Query, nil
-	case regexp.MustCompile(expressionOrder).MatchString(signature):
+	case regexManyOrderAndResult.MatchString(signature):
+		return messagetype.Result, nil
+	case regexOrder.MatchString(signature):
 		return messagetype.Order, nil
-	case regexp.MustCompile(expressionOrderAndResult).MatchString(signature):
-		return messagetype.Result, nil
-	case regexp.MustCompile(expressionManyOrderAndResult).MatchString(signature):
-		return messagetype.Result, nil
 	}
 	// If no match was found return unknown
-	return messagetype.Unidentified, err
+	return messagetype.Unidentified, nil
 }
+
+// Regular expressions to identify message types
+var (
+	regexQuery              = regexp.MustCompile("^(HQ+)+L?$")
+	regexOrder              = regexp.MustCompile("^(H(PO+)+)+L?$")
+	regexOrderAndResult     = regexp.MustCompile("^H(P(OR+)+)+L?$")
+	regexManyOrderAndResult = regexp.MustCompile("^(H(P(OR+)+)+L?)+$")
+)

@@ -2,11 +2,6 @@ package errmsg
 
 import "errors"
 
-// Encoding
-var (
-	ErrEncodingInvalidEncoding = errors.New("invalid encoding")
-)
-
 // Lining
 var (
 	ErrLineProcessingEmptyInput       = errors.New("empty input")
@@ -30,7 +25,6 @@ var (
 	ErrLineParsingEmptyInput                  = errors.New("empty input")
 	ErrLineParsingHeaderTooShort              = errors.New("header too short")
 	ErrLineParsingMandatoryInputFieldsMissing = errors.New("mandatory input fields missing")
-	ErrLineParsingLineTypeNameMismatch        = errors.New("line type name mismatch")
 	ErrLineParsingSequenceNumberMismatch      = errors.New("sequence number mismatch")
 	ErrLineParsingRequiredInputFieldMissing   = errors.New("required input field missing")
 	ErrLineParsingInputComponentsMissing      = errors.New("input components missing")

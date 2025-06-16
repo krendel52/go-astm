@@ -168,8 +168,7 @@ func TestTimeLocalization(t *testing.T) {
 
 type MarshalEnum string
 
-const SomeTestMarshalEnum1 MarshalEnum = "Something"
-const SomeTestMarshalEnum2 MarshalEnum = "SomethingElse"
+const SomeTestMarshalEnum MarshalEnum = "Something"
 
 type MarshalEnumRecord struct {
 	Field MarshalEnum `astm:"3"`
@@ -181,13 +180,13 @@ type MarshalEnumMessage struct {
 func TestEnumMarshal(t *testing.T) {
 	// Arrange
 	var msg MarshalEnumMessage
-	msg.Record.Field = SomeTestMarshalEnum2
+	msg.Record.Field = SomeTestMarshalEnum
 	// Act
 	lines, err := astm.Marshal(msg, config)
 	// Assert
 	assert.Nil(t, err)
 	assert.Len(t, lines, 1)
-	assert.Equal(t, "X|1|SomethingElse", string(lines[0]))
+	assert.Equal(t, "X|1|Something", string(lines[0]))
 }
 
 type SpecimenDonorSubstructure struct {

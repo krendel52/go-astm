@@ -2,6 +2,7 @@ package functions
 
 import (
 	"github.com/blutspende/bloodlab-common/timezone"
+	"github.com/blutspende/go-astm/v3/enums/lineseparator"
 	"github.com/blutspende/go-astm/v3/models/astmmodels"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -30,7 +31,7 @@ func TestLoadConfigurationNoDelimiters(t *testing.T) {
 func TestLoadConfigurationValueKept(t *testing.T) {
 	// Arrange
 	inputConfig := astmmodels.Configuration{
-		LineSeparator: "\n",
+		LineSeparator: lineseparator.LF,
 	}
 	// Act
 	loadedConfig, err := LoadConfiguration(inputConfig)

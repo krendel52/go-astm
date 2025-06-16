@@ -124,7 +124,7 @@ func TestBuildLine_MultitypePointerRecord(t *testing.T) {
 	String := "string"
 	Int := 3
 	Float32 := float32(3.14)
-	Float64 := float64(3.14159265)
+	Float64 := 3.14159265
 	Date := time.Date(2006, 1, 2, 0, 0, 0, 0, config.TimeLocation)
 	source := MultitypePointerRecord{
 		String:  &String,
@@ -424,12 +424,12 @@ func TestBuildLine_SubstructureArrayRecord(t *testing.T) {
 	source := SubstructureArrayRecord{
 		First: "first",
 		Second: []SubstructureField{
-			SubstructureField{
+			{
 				FirstComponent:  "r1c1",
 				SecondComponent: "r1c2",
 				ThirdComponent:  "r1c3",
 			},
-			SubstructureField{
+			{
 				FirstComponent:  "r2c1",
 				SecondComponent: "r2c2",
 				ThirdComponent:  "r2c3",
