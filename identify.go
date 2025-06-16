@@ -10,7 +10,7 @@ import (
 
 func IdentifyMessage(messageData []byte, configuration ...astmmodels.Configuration) (messageType messagetype.MessageType, err error) {
 	// Load configuration
-	config, err := loadConfiguration(configuration...)
+	config, err := functions.LoadConfiguration(configuration...)
 	if err != nil {
 		return "", err
 	}
@@ -24,28 +24,23 @@ func IdentifyMessage(messageData []byte, configuration ...astmmodels.Configurati
 	if err != nil {
 		return "", err
 	}
-	// Extract the first characters from each line
-	firstChars := ""
-	for _, line := range lines {
-		if len(line) > 0 {
-			firstChars += string(line[0])
-		}
-	}
-	// TODO: verify these regexes to be correct
+	// Extract signature
+	signature := functions.ExtractSignature(lines)
+
 	// Set up the possible message types regexes
 	expressionQuery := "^(HQ+)+L?$"
-	expressionOrder := "^(H(PM?C?M?OM?C?M?)+)+L?$"
-	expressionOrderAndResult := "^(H(PM*C?M*OM*C?M*(RM*C?M*)+)+)+L?$"
-	expressionManyOrderAndResult := "^(H(PM*C?M*(OM*C?M*(RM*C?M*)+)*)L?)+$"
-	// Check the first characters against the regexes and return the message type
+	expressionOrder := "^(H(PO+)+)+L?$"
+	expressionOrderAndResult := "^H(P(OR+)+)+L?$"
+	expressionManyOrderAndResult := "^(H(P(OR+)+)+L?)+$"
+	// Check the signature against the regexes and return the message type
 	switch {
-	case regexp.MustCompile(expressionQuery).MatchString(firstChars):
+	case regexp.MustCompile(expressionQuery).MatchString(signature):
 		return messagetype.Query, nil
-	case regexp.MustCompile(expressionOrder).MatchString(firstChars):
+	case regexp.MustCompile(expressionOrder).MatchString(signature):
 		return messagetype.Order, nil
-	case regexp.MustCompile(expressionOrderAndResult).MatchString(firstChars):
+	case regexp.MustCompile(expressionOrderAndResult).MatchString(signature):
 		return messagetype.Result, nil
-	case regexp.MustCompile(expressionManyOrderAndResult).MatchString(firstChars):
+	case regexp.MustCompile(expressionManyOrderAndResult).MatchString(signature):
 		return messagetype.Result, nil
 	}
 	// If no match was found return unknown

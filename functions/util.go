@@ -1,15 +1,11 @@
-package astm
+package functions
 
 import (
 	"github.com/blutspende/go-astm/v3/models/astmmodels"
+	"regexp"
 )
 
-func NewDefaultConfiguration() astmmodels.Configuration {
-	config := astmmodels.DefaultConfiguration
-	return config
-}
-
-func loadConfiguration(configuration ...astmmodels.Configuration) (config *astmmodels.Configuration, err error) {
+func LoadConfiguration(configuration ...astmmodels.Configuration) (config *astmmodels.Configuration, err error) {
 	if len(configuration) > 0 {
 		config = &configuration[0]
 	} else {
@@ -26,4 +22,18 @@ func loadConfiguration(configuration ...astmmodels.Configuration) (config *astmm
 		return nil, err
 	}
 	return config, nil
+}
+
+func ExtractSignature(lines []string) string {
+	// Extract the first characters from each line
+	firstChars := ""
+	for _, line := range lines {
+		if len(line) > 0 {
+			firstChars += string(line[0])
+		}
+	}
+	// Remove M and C characters
+	firstChars = regexp.MustCompile("[MC]").ReplaceAllString(firstChars, "")
+	// Return signature
+	return firstChars
 }

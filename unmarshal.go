@@ -8,7 +8,7 @@ import (
 
 func Unmarshal(messageData []byte, targetStruct interface{}, configuration ...astmmodels.Configuration) (err error) {
 	// Load configuration
-	config, err := loadConfiguration(configuration...)
+	config, err := functions.LoadConfiguration(configuration...)
 	if err != nil {
 		return err
 	}
