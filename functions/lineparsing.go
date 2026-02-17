@@ -2,14 +2,15 @@ package functions
 
 import (
 	"errors"
-	"github.com/blutspende/go-astm/v3/constants"
-	"github.com/blutspende/go-astm/v3/errmsg"
-	"github.com/blutspende/go-astm/v3/models"
-	"github.com/blutspende/go-astm/v3/models/astmmodels"
 	"reflect"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/blutspende/go-astm/v3/constants"
+	"github.com/blutspende/go-astm/v3/errmsg"
+	"github.com/blutspende/go-astm/v3/models"
+	"github.com/blutspende/go-astm/v3/models/astmmodels"
 )
 
 func ParseLine(inputLine string, targetStruct interface{}, recordAnnotation models.AstmStructAnnotation, sequenceNumber int, config *astmmodels.Configuration) (nameOk bool, err error) {
@@ -294,9 +295,6 @@ func splitStringWithEscape(input, delimiter, escape string) []string {
 			result = append(result, string(inputRunes[start:i]))
 			start = i + 1
 		}
-		if i == len(inputRunes)-1 {
-			result = append(result, string(inputRunes[start:i+1]))
-		}
 		if inputRunes[i] == escapeRune {
 			if i+1 < len(inputRunes) && string(inputRunes[i+1]) == "Z" {
 				for j := i + 2; j < len(inputRunes); j++ {
@@ -310,6 +308,10 @@ func splitStringWithEscape(input, delimiter, escape string) []string {
 			}
 			continue
 		}
+	}
+
+	if start <= len(inputRunes)-1 {
+		result = append(result, string(inputRunes[start:]))
 	}
 
 	return result
