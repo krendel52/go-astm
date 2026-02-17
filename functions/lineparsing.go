@@ -283,7 +283,8 @@ func setField(value string, field reflect.Value, annotation models.AstmFieldAnno
 	return errmsg.ErrLineParsingUnsupportedDataType
 }
 
-func splitStringWithEscape(input string, delimiter string, escape string) (result []string) {
+func splitStringWithEscape(input, delimiter, escape string) []string {
+	var result []string
 	delimiterRune := rune(delimiter[0])
 	escapeRune := rune(escape[0])
 	inputRunes := []rune(input)
@@ -297,10 +298,19 @@ func splitStringWithEscape(input string, delimiter string, escape string) (resul
 			result = append(result, string(inputRunes[start:i+1]))
 		}
 		if inputRunes[i] == escapeRune {
-			i++
+			if i+1 < len(inputRunes) && string(inputRunes[i+1]) == "Z" {
+				for j := i + 2; j < len(inputRunes); j++ {
+					if string(inputRunes[j]) == string(escapeRune) {
+						i = j
+					}
+				}
+			} else {
+				i++
+			}
 			continue
 		}
 	}
+
 	return result
 }
 
