@@ -2,8 +2,8 @@ package functions
 
 import (
 	"github.com/blutspende/bloodlab-common/timezone"
-	"github.com/blutspende/go-astm/v3/enums/lineseparator"
-	"github.com/blutspende/go-astm/v3/models/astmmodels"
+	"github.com/krendel52/go-astm/v3/enums/lineseparator"
+	"github.com/krendel52/go-astm/v3/models/astmmodels"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

@@ -1,8 +1,8 @@
 package functions
 
 import (
-	"github.com/blutspende/go-astm/v3/enums/notation"
-	"github.com/blutspende/go-astm/v3/errmsg"
+	"github.com/krendel52/go-astm/v3/enums/notation"
+	"github.com/krendel52/go-astm/v3/errmsg"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"

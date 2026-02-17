@@ -1,7 +1,7 @@
 package astm
 
 import (
-	"github.com/blutspende/go-astm/v3/models/astmmodels"
+	"github.com/krendel52/go-astm/v3/models/astmmodels"
 )
 
 func NewDefaultConfiguration() astmmodels.Configuration {

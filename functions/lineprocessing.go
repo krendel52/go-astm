@@ -1,9 +1,9 @@
 package functions
 
 import (
-	"github.com/blutspende/go-astm/v3/enums/lineseparator"
-	"github.com/blutspende/go-astm/v3/errmsg"
-	"github.com/blutspende/go-astm/v3/models/astmmodels"
+	"github.com/krendel52/go-astm/v3/enums/lineseparator"
+	"github.com/krendel52/go-astm/v3/errmsg"
+	"github.com/krendel52/go-astm/v3/models/astmmodels"
 	"strings"
 )
 

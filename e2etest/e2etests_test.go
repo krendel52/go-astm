@@ -3,7 +3,7 @@ package e2e
 import (
 	"bytes"
 	"github.com/blutspende/bloodlab-common/encoding"
-	"github.com/blutspende/go-astm/v3/models/astmmodels"
+	"github.com/krendel52/go-astm/v3/models/astmmodels"
 	"golang.org/x/text/encoding/charmap"
 	"golang.org/x/text/transform"
 	"testing"

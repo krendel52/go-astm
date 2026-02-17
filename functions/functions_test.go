@@ -1,10 +1,11 @@
 package functions
 
 import (
-	"github.com/blutspende/go-astm/v3/models"
-	"github.com/blutspende/go-astm/v3/models/astmmodels"
 	"testing"
 	"time"
+
+	"github.com/krendel52/go-astm/v3/models"
+	"github.com/krendel52/go-astm/v3/models/astmmodels"
 )
 
 // Configuration struct for tests

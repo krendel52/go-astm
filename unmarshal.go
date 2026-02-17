@@ -2,8 +2,8 @@ package astm
 
 import (
 	"github.com/blutspende/bloodlab-common/encoding"
-	"github.com/blutspende/go-astm/v3/functions"
-	"github.com/blutspende/go-astm/v3/models/astmmodels"
+	"github.com/krendel52/go-astm/v3/functions"
+	"github.com/krendel52/go-astm/v3/models/astmmodels"
 )
 
 func Unmarshal(messageData []byte, targetStruct interface{}, configuration ...astmmodels.Configuration) (err error) {

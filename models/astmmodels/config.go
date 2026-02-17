@@ -3,8 +3,8 @@ package astmmodels
 import (
 	"github.com/blutspende/bloodlab-common/encoding"
 	"github.com/blutspende/bloodlab-common/timezone"
-	"github.com/blutspende/go-astm/v3/enums/lineseparator"
-	"github.com/blutspende/go-astm/v3/enums/notation"
+	"github.com/krendel52/go-astm/v3/enums/lineseparator"
+	"github.com/krendel52/go-astm/v3/enums/notation"
 	"time"
 )
 
