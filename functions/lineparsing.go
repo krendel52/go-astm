@@ -302,6 +302,7 @@ func splitStringWithEscape(input, delimiter, escape string) []string {
 				for j := i + 2; j < len(inputRunes); j++ {
 					if string(inputRunes[j]) == string(escapeRune) {
 						i = j
+						break
 					}
 				}
 			} else {
