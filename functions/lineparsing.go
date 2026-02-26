@@ -258,6 +258,9 @@ func setField(value string, field reflect.Value, annotation models.AstmFieldAnno
 			switch len(value) {
 			case 8:
 				timeFormat = "20060102" // YYYYMMDD
+			case 12:
+				value = "20" + value
+				fallthrough
 			case 14:
 				timeFormat = "20060102150405" // YYYYMMDDHHMMSS
 			default:
