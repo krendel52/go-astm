@@ -171,7 +171,8 @@ type PatientGroup struct {
 	OrderGroups []OrderGroup
 }
 type OrderGroup struct {
-	Order        Order `astm:"O"`
+	Order        Order     `astm:"O"`
+	Comments     []Comment `astm:"C,optional"`
 	ResultGroups []ResultGroup
 }
 type ResultGroup struct {
