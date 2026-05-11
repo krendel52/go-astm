@@ -1,6 +1,10 @@
 package lis02a2
 
-import "time"
+import (
+	"time"
+
+	"github.com/krendel52/go-astm/v3/models/astmmodels"
+)
 
 // Standard LIS02-A2 record and message format declarations to use for (un)marshaling
 // These structures can be used directly or as a base for custom implementations
@@ -29,18 +33,19 @@ type ExtendedUniversalTestID struct { //5.6.1
 // Record structures //
 
 type Header struct {
-	MessageControlID        string    `astm:"3"`           // 6.3
-	AccessPassword          string    `astm:"4"`           // 6.4
-	SenderNameOrID          string    `astm:"5"`           // 6.5
-	SenderStreetAddress     string    `astm:"6"`           // 6.6
-	Reserved                string    `astm:"7"`           // 6.7
-	SenderTelephone         string    `astm:"8"`           // 6.8
-	CharacteristicsOfSender string    `astm:"9"`           // 6.9
-	ReceiverID              string    `astm:"10"`          // 6.10
-	Comment                 string    `astm:"11"`          // 6.11
-	ProcessingID            string    `astm:"12"`          // 6.12
-	Version                 string    `astm:"13"`          // 6.13
-	DateAndTime             time.Time `astm:"14,longdate"` // 6.14
+	Delimiters              astmmodels.Delimiters // 6.2
+	MessageControlID        string                `astm:"3"`           // 6.3
+	AccessPassword          string                `astm:"4"`           // 6.4
+	SenderNameOrID          string                `astm:"5"`           // 6.5
+	SenderStreetAddress     string                `astm:"6"`           // 6.6
+	Reserved                string                `astm:"7"`           // 6.7
+	SenderTelephone         string                `astm:"8"`           // 6.8
+	CharacteristicsOfSender string                `astm:"9"`           // 6.9
+	ReceiverID              string                `astm:"10"`          // 6.10
+	Comment                 string                `astm:"11"`          // 6.11
+	ProcessingID            string                `astm:"12"`          // 6.12
+	Version                 string                `astm:"13"`          // 6.13
+	DateAndTime             time.Time             `astm:"14,longdate"` // 6.14
 }
 type Patient struct {
 	PracticeAssignedPatientID          string    `astm:"3"`   // 7.3

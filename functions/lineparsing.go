@@ -2,6 +2,7 @@ package functions
 
 import (
 	"errors"
+	"fmt"
 	"reflect"
 	"strconv"
 	"strings"
@@ -33,6 +34,12 @@ func ParseLine(inputLine string, targetStruct interface{}, recordAnnotation mode
 		config.Delimiters.Repeat = string(inputLine[2])
 		config.Delimiters.Component = string(inputLine[3])
 		config.Delimiters.Escape = string(inputLine[4])
+
+		err = setDelimiters(targetStruct, config.Delimiters)
+		if err != nil {
+			return false, err
+		}
+
 		// Place the fix segment into the inputFields
 		inputFields = []string{inputLine[0:1], inputLine[1:5]}
 		// Add the rest of the inputLine split by the field delimiter
@@ -335,4 +342,52 @@ func filterStringEscapeChars(input string, escape string) string {
 		}
 	}
 	return builder.String()
+}
+
+func setDelimiters(targetStruct interface{}, delimiters astmmodels.Delimiters) error {
+	v := reflect.ValueOf(targetStruct)
+
+	// Check pointer
+	if v.Kind() != reflect.Ptr {
+		return fmt.Errorf("targetStruct must be a pointer")
+	}
+
+	// Check nil
+	if v.IsNil() {
+		return fmt.Errorf("targetStruct is nil")
+	}
+
+	v = v.Elem()
+
+	// Check struct
+	if v.Kind() != reflect.Struct {
+		return fmt.Errorf("targetStruct must point to a struct")
+	}
+
+	field := v.FieldByName("Delimiters")
+
+	// Check field existence
+	if !field.IsValid() {
+		return fmt.Errorf("field Delimiters not found")
+	}
+
+	// Check settable
+	if !field.CanSet() {
+		return fmt.Errorf("field Delimiters cannot be set")
+	}
+
+	// Check type
+	expectedType := reflect.TypeOf(astmmodels.Delimiters{})
+
+	if field.Type() != expectedType {
+		return fmt.Errorf(
+			"invalid field type: expected %v, got %v",
+			expectedType,
+			field.Type(),
+		)
+	}
+
+	field.Set(reflect.ValueOf(delimiters))
+
+	return nil
 }

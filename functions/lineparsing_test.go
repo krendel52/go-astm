@@ -102,6 +102,18 @@ func TestParseLine_HeaderRecord(t *testing.T) {
 	assert.Equal(t, "first", target.First)
 }
 
+func TestParseLine_Lis02a2HeaderRecord(t *testing.T) {
+	// Arrange
+	input := "H|@^\\|F35D46A0FFBC4A409C653EEEFCA20A49||123123|||||123||P|1394-97|20260511134254"
+	target := lis02a2.Header{}
+	// Act
+	nameOk, err := ParseLine(input, &target, createStructAnnotation("H"), 0, config)
+	// Assert
+	assert.Nil(t, err)
+	assert.True(t, nameOk)
+	assert.Equal(t, "F35D46A0FFBC4A409C653EEEFCA20A49", target.MessageControlID)
+}
+
 func TestParseLine_HeaderDelimiterChange(t *testing.T) {
 	// Arrange
 	input := "H/!*%/first/second1!second2/third1*third2"

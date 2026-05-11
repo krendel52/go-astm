@@ -140,13 +140,15 @@ type ArrayRecord struct {
 	Array []string `astm:"4"`
 }
 type HeaderRecord struct {
-	First string `astm:"3"`
+	Delimiters astmmodels.Delimiters
+	First      string `astm:"3"`
 }
 type HeaderDelimiterChange struct {
-	First string   `astm:"3"`
-	Array []string `astm:"4"`
-	Comp1 string   `astm:"5.1"`
-	Comp2 string   `astm:"5.2"`
+	Delimiters astmmodels.Delimiters
+	First      string   `astm:"3"`
+	Array      []string `astm:"4"`
+	Comp1      string   `astm:"5.1"`
+	Comp2      string   `astm:"5.2"`
 }
 type RequiredFieldRecord struct {
 	First  string `astm:"3"`
